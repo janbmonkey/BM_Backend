@@ -24,7 +24,7 @@ public class UserController {
         return userDto;
     }
 
-    @PutMapping(value = "/user/{id}")
+    @PutMapping(value = "/user")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     long putUser(@RequestBody UserDto userDto){
