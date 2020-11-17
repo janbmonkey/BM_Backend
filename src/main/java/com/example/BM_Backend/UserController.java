@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class UserController {
@@ -19,9 +21,17 @@ public class UserController {
     @GetMapping(value = "/user/{id}")
     @ResponseBody
     UserDto getUser(@PathVariable("id") long id) {
-        UserEntity userEntity = userService.getUser(id);
-        UserDto userDto = this.convertToDto(userEntity);
+        Optional<UserEntity> userEntityOptional = userService.getUser(id);
+        UserDto userDto = userEntityOptional.map(userEntity -> this.convertToDto(userEntity)).orElse(new UserDto());
         return userDto;
+    }
+
+    @GetMapping(value = "/user")
+    @ResponseBody
+    List<UserDto> getAllUsers() {
+        List<UserEntity> userEntities = userService.getAllUsers();
+        List<UserDto> userDtos = userEntities.stream().map((user) -> this.convertToDto(user)).collect(Collectors.toList());
+        return userDtos;
     }
 
     @PutMapping(value = "/user")
@@ -29,12 +39,12 @@ public class UserController {
     @ResponseBody
     long putUser(@RequestBody UserDto userDto){
         UserEntity userEntity = this.convertToEntity(userDto);
-        userService.addUser(userEntity);
-        return userEntity.getId();
+        return userService.setUser(userEntity);
     }
 
     private UserDto convertToDto(UserEntity userEntity){
         UserDto userDto = modelMapper.map(userEntity, UserDto.class);
+        System.out.println(userDto);
         return userDto;
     }
 

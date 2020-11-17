@@ -1,9 +1,14 @@
 package com.example.BM_Backend;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name="USER")
+@Data
 public class UserEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -14,31 +19,4 @@ public class UserEntity {
 
     @Column(name="EMAIL", length=50, nullable=false, unique=false)
     private String email;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    //@ElementCollection
-    //Set<String> userList = new HashSet<>();
 }
