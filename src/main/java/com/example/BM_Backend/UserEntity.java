@@ -7,11 +7,12 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name="USER")
+@Table(name="USER_ENTITY")
 @Data
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="ID")
     private long id;
 
     @Column(name="NAME", length=50, nullable=false, unique=true)

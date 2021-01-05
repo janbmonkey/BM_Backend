@@ -34,17 +34,17 @@ public class UserController {
         return userDtos;
     }
 
-    @PutMapping(value = "/user")
+    @PostMapping(value = "/user")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     long putUser(@RequestBody UserDto userDto){
         UserEntity userEntity = this.convertToEntity(userDto);
+        System.out.println(userEntity);
         return userService.setUser(userEntity);
     }
 
     private UserDto convertToDto(UserEntity userEntity){
         UserDto userDto = modelMapper.map(userEntity, UserDto.class);
-        System.out.println(userDto);
         return userDto;
     }
 
